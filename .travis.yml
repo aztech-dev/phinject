@@ -20,6 +20,9 @@ script:
 
 after_script:
   - make clean
+  - wget https://padraic.github.io/humbug/downloads/humbug.phar
+  - wget https://padraic.github.io/humbug/downloads/humbug.phar.pubkey
+  - chmod +x humbug.phar
 
 matrix:
   fast_finish: true
