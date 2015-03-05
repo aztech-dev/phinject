@@ -4,6 +4,7 @@ php:
   - 5.4
   - 5.5
   - 5.6
+  - 7
   - hhvm
 
 env:
@@ -13,16 +14,16 @@ before_script:
   - composer selfupdate
   - travis_retry composer install --dev --prefer-source
   - travis_retry git clone https://github.com/padraic/humbug.git
-  - cd humbug && git checkout fd825a54e7f9851b3a8202ec161c6999f63f6eca && composer install && cd ..
+  - cd humbug && composer install && cd ..
 
 script:
   - make phpunit
-  - if [ $(phpenv version-name) = $PHP_CURRENT ]; then make test-upload; fi
+  - if [ $(phpenv version-name) = $PHP_CURRENT ]; php humbug/bin/humbug
   - if [ $(phpenv version-name) = $PHP_CURRENT ]; then make phpcs bugfree; fi
 
 after_script:
-  - php humbug/bin/humbug
-  - curl -isb -X POST --form "filedata=@humbuglog.json;filename=report.json" http://mutator.io/report/$TRAVIS_REPO_SLUG/$TRAVIS_COMMIT/
+  - if [ $(phpenv version-name) = $PHP_CURRENT ]; then make test-upload; fi
+  - if [ $(phpenv version-name) = $PHP_CURRENT ]; curl -isb -X POST --form "filedata=@humbuglog.json;filename=report.json" http://mutator.io/report/$TRAVIS_REPO_SLUG/$TRAVIS_COMMIT/
 
 matrix:
   fast_finish: true
