@@ -18,7 +18,7 @@ before_script:
 
 script:
   - make phpunit
-  - if [ $(phpenv version-name) = $PHP_CURRENT ]; php humbug/bin/humbug
+  - if [ $(phpenv version-name) = $PHP_CURRENT ]; then php humbug/bin/humbug; fi
   - if [ $(phpenv version-name) = $PHP_CURRENT ]; then make phpcs bugfree; fi
 
 after_script:
