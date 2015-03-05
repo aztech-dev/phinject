@@ -23,7 +23,7 @@ script:
 
 after_script:
   - if [ $(phpenv version-name) = $PHP_CURRENT ]; then make test-upload; fi
-  - if [ $(phpenv version-name) = $PHP_CURRENT ]; curl -isb -X POST --form "filedata=@humbuglog.json;filename=report.json" http://mutator.io/report/$TRAVIS_REPO_SLUG/$TRAVIS_COMMIT/
+  - if [ $(phpenv version-name) = $PHP_CURRENT ]; then curl -isb -X POST --form "filedata=@humbuglog.json;filename=report.json" http://mutator.io/report/$TRAVIS_REPO_SLUG/$TRAVIS_COMMIT/; fi
 
 matrix:
   fast_finish: true
